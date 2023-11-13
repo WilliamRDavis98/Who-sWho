@@ -21,3 +21,5 @@ export default interface Artist {
 }
 
 // maybe for the artists we get, we could use the get related artists so it is more difficult to pick
+// maybe get random artists and if the genres property contains the selected genre then add
+// could also set an ID for an artist within each genre, and then get related artists, and then choose random
