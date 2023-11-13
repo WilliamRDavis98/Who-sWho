@@ -1,0 +1,11 @@
+.SongBoard{
+    display: flex;
+    flex-direction: row;
+
+}
+
+.ArtistBoard{
+    display: flex;
+    flex-direction: row;
+
+}

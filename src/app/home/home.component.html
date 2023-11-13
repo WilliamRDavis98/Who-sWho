@@ -1,5 +1,7 @@
 <div *ngIf="authLoading || configLoading">Loading...</div>
 <div *ngIf="!authLoading && !configLoading">
+  <h1>Welcome to Who's Who</h1>
+  <p>Who's who is an interactive guessing game where you put your musical knowledge to the test.</p>
   Genre:
   <select [(ngModel)]="selectedGenre" (ngModelChange)="setGenre($event)">
     <option [value]=""></option>
@@ -7,4 +9,23 @@
       {{ genre }}
     </option>
   </select>
+  <div>
+    <h2>How many Songs do you want from the artist?</h2>
+    <select>
+      <option>1: Default</option>
+      <option>2</option>
+      <option>3</option>
+    </select>
+  </div>
+  <div>
+    <h2>How many Artists do you want to select from?</h2>
+    <select>
+      <option>2:Default</option>
+      <option>3</option>
+      <option>4</option>
+    </select>
+  </div>
+  <div>
+    <a href="/guess"><button class="link">Guess</button></a>
+  </div>
 </div>
