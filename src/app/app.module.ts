@@ -3,6 +3,7 @@ import { BrowserModule } from "@angular/platform-browser";
 import { FormsModule } from "@angular/forms";
 import { RouterModule, Routes } from "@angular/router";
 import { ReactiveFormsModule } from "@angular/forms";
+import {Howl, Howler} from 'howler'
 
 import { AppComponent } from "./app.component";
 import { HomeComponent } from "./home/home.component";

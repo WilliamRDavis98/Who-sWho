@@ -5,6 +5,7 @@ import fetchFromSpotify, { request } from "../../services/api";
 
 const AUTH_ENDPOINT = "https://accounts.spotify.com/api/token";
 const TOKEN_KEY = "whos-who-access-token";
+import { Howl, Howler } from 'howler';
 
 @Component({
   selector: 'app-guess',
@@ -25,6 +26,11 @@ export class GuessComponent implements OnInit {
   token: string = "";
   songs: string[] = [];
   // song1Url: string = "https://p.scdn.co/mp3-preview/6eafa4293d2b35b2e75ffab5ec1bba8ec00d5082?cid=0442ccff46ef47b981dd1b4e13eb8a4d";
+  song1 = new Howl({
+    src: ['https://p.scdn.co/mp3-preview/c590292029e985515f7063e8d5d291d677694eb9?cid=c4199e9be8874c78b1199eea6593dad4'],
+    html5 :true,
+    volume: .5
+  });
 
   ngOnInit(): void {
     this.songData.currentGenre.subscribe(currentGenre => this.genre = currentGenre)
@@ -87,6 +93,24 @@ export class GuessComponent implements OnInit {
 
   returnHome(){
     this.router.navigateByUrl('/')
+  }
+  
+  toggleSong(currentSong: Howl){
+    if(currentSong.playing()){
+      currentSong.pause()      
+    }else{
+      currentSong.play()
+    }
+  }
+
+  incrementVolume(currentSong: Howl){
+    currentSong.volume(currentSong.volume() + .1)
+    console.log(currentSong.volume())
+  }
+
+  decrementVolume(currentSong: Howl){
+    currentSong.volume(currentSong.volume() - .1)
+    console.log(currentSong.volume())
   }
 
 }
