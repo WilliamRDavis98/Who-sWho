@@ -118,21 +118,21 @@ export class HomeComponent implements OnInit {
 
   }
 
-  onGenerateArtists() {
-    this.authLoading = true;
-    const storedTokenString = localStorage.getItem(TOKEN_KEY);
-    if (storedTokenString) {
-      const storedToken = JSON.parse(storedTokenString);
-      if (storedToken.expiration > Date.now()) {
-        console.log("Token found in localstorage");
-        this.authLoading = false;
-        this.token = storedToken.value;
-        this.loadRecommendations(this.token, this.selectedGenre)
-        return;
-      }
-    }
+  // onGenerateArtists() {
+  //   this.authLoading = true;
+  //   const storedTokenString = localStorage.getItem(TOKEN_KEY);
+  //   if (storedTokenString) {
+  //     const storedToken = JSON.parse(storedTokenString);
+  //     if (storedToken.expiration > Date.now()) {
+  //       console.log("Token found in localstorage");
+  //       this.authLoading = false;
+  //       this.token = storedToken.value;
+  //       this.loadRecommendations(this.token, this.selectedGenre)
+  //       return;
+  //     }
+  //   }
 
-  }
+
 
   onSubmit() {
     this.songData.updateGenre(
@@ -145,7 +145,19 @@ export class HomeComponent implements OnInit {
       this.homeForm.controls['selectedArtistNumbers'].value
     )
 
-
+    this.authLoading = true;
+    const storedTokenString = localStorage.getItem(TOKEN_KEY);
+    if (storedTokenString) {
+      const storedToken = JSON.parse(storedTokenString);
+      if (storedToken.expiration > Date.now()) {
+        console.log("Token found in localstorage");
+        this.authLoading = false;
+        this.token = storedToken.value;
+        this.loadRecommendations(this.token, this.selectedGenre)
+        this.router.navigateByUrl('/guess')
+        return;
+      }
+    }
 
 
     // console.log(this.songData.currentGenre)
@@ -155,7 +167,6 @@ export class HomeComponent implements OnInit {
 
 
 
-    this.router.navigateByUrl('/guess')
   }
 
 
@@ -167,8 +178,3 @@ export class HomeComponent implements OnInit {
 //response.tracks[0].artists[0].id
 
 //'https://api.spotify.com/v1/recommendations?limit=1&market=US&seed_genres=classical'
-
-
-
-
-
