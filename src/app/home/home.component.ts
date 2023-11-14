@@ -4,8 +4,8 @@ import { FormGroup, FormControl } from "@angular/forms";
 import { SongService } from "../song.service";
 import { Router } from "@angular/router";
 
-const AUTH_ENDPOINT =
-  "https://nuod0t2zoe.execute-api.us-east-2.amazonaws.com/FT-Classroom/spotify-auth-token";
+const AUTH_ENDPOINT ="https://accounts.spotify.com/api/token";
+  // "https://nuod0t2zoe.execute-api.us-east-2.amazonaws.com/FT-Classroom/spotify-auth-token";
 const TOKEN_KEY = "whos-who-access-token";
 
 @Component({
@@ -46,7 +46,6 @@ export class HomeComponent implements OnInit {
       (currentArtistNumber) => this.homeForm.patchValue({selectedArtistNumbers: currentArtistNumber})
     )
 
-    console.log(1)
 
     //end of Will's code
 
@@ -63,7 +62,17 @@ export class HomeComponent implements OnInit {
       }
     }
     console.log("Sending request to AWS endpoint");
-    request(AUTH_ENDPOINT).then(({ access_token, expires_in }) => {
+    request(AUTH_ENDPOINT,
+      {
+        hearders: {'Content-Type': 'application/x-www-form-urlencoded'},
+        method: 'POST',
+        body: new URLSearchParams({
+          'grant_type': 'client_credentials',
+          'client_id': '332232eda2814f0f8c5e213dfb3ef5b2',
+          'client_secret': '2364f60b3c6c483a8df359f46b5c2181'
+        })
+      }
+      ).then(({ access_token, expires_in }) => {
       const newToken = {
         value: access_token,
         expiration: Date.now() + (expires_in - 20) * 1000,
