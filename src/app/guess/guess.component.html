@@ -12,7 +12,10 @@
     </div>
     <div class="Data">
         <h3>You have: 3 Guesses Left!</h3>
-        <button>Return to Home Screen!</button>
+        <h3>The Current Genre is {{ genre }}</h3>
+        <h3>The number of Songs is {{ songNumber }}</h3>
+        <h3>The number of Artists is {{ artistNumber }}</h3>
+        <button (click)="onSubmit()">Return to Home Screen!</button>
 
     </div>
 </div>

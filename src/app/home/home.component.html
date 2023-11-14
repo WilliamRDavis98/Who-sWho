@@ -1,31 +1,40 @@
-<div *ngIf="authLoading || configLoading">Loading...</div>
-<div *ngIf="!authLoading && !configLoading">
-  <h1>Welcome to Who's Who</h1>
-  <p>Who's who is an interactive guessing game where you put your musical knowledge to the test.</p>
-  Genre:
-  <select [(ngModel)]="selectedGenre" (ngModelChange)="setGenre($event)">
-    <option [value]=""></option>
-    <option [value]="genre" *ngFor="let genre of genres">
+<!-- <div *ngIf="authLoading || configLoading">Loading...</div>
+<div *ngIf="!authLoading && !configLoading"> -->
+  <div class="container">
+<h1>Welcome to Who's Who</h1>
+<p>Who's who is an interactive guessing game where you put your musical knowledge to the test.</p>
+Genre:
+<form class="form-box" [formGroup]="homeForm">
+  <select [(ngModel)]="selectedGenre" (ngModelChange)="setGenre($event)" formControlName="genre">
+    <option [ngValue]=""></option>
+    <option [ngValue]="genre" *ngFor="let genre of genres">
       {{ genre }}
     </option>
   </select>
   <div>
     <h2>How many Songs do you want from the artist?</h2>
-    <select>
-      <option>1: Default</option>
+    <select formControlName="selectedSongNumbers">
+      <option>1</option>
       <option>2</option>
       <option>3</option>
     </select>
   </div>
   <div>
     <h2>How many Artists do you want to select from?</h2>
-    <select>
-      <option>2:Default</option>
+    <select formControlName="selectedArtistNumbers">
+      <option>2</option>
       <option>3</option>
       <option>4</option>
     </select>
   </div>
   <div>
-    <a href="/guess"><button class="link">Guess</button></a>
+    <button class="link" (click)="onSubmit()">Guess</button>
   </div>
+</form>
+<!-- </div> -->
+<div>
+  <p>Selected Genre: {{homeForm.controls['genre'].value}}</p>
+  <p>Selected Song Numbers: {{homeForm.controls['selectedSongNumbers'].value}}</p>
+  <p>Selected Artist Numbers: {{homeForm.controls['selectedArtistNumbers'].value}}</p>
+</div>
 </div>

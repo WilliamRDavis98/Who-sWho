@@ -1,5 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import fetchFromSpotify, { request } from "../../services/api";
+import { FormGroup, FormControl } from "@angular/forms";
+import { SongService } from "../song.service";
+import { Router } from "@angular/router";
 
 const AUTH_ENDPOINT =
   "https://nuod0t2zoe.execute-api.us-east-2.amazonaws.com/FT-Classroom/spotify-auth-token";
@@ -11,7 +14,7 @@ const TOKEN_KEY = "whos-who-access-token";
   styleUrls: ["./home.component.css"],
 })
 export class HomeComponent implements OnInit {
-  constructor() {}
+  constructor(private songData: SongService, private router: Router) {}
 
   genres: String[] = ["House", "Alternative", "J-Rock", "R&B"];
   selectedGenre: String = "";
@@ -19,7 +22,34 @@ export class HomeComponent implements OnInit {
   configLoading: boolean = false;
   token: String = "";
 
+  homeForm: FormGroup = new FormGroup({
+    genre: new FormControl<string>(''),
+    selectedSongNumbers: new FormControl<number>(1),
+    selectedArtistNumbers: new FormControl<number>(2)
+  })
+
+
   ngOnInit(): void {
+    //Will's Code
+    this.songData.currentGenre.subscribe(
+      (currentGenre) => this.selectedGenre)
+    
+    this.songData.currentGenre.subscribe(
+      (currentGenre) => this.homeForm.patchValue({genre: currentGenre})
+    )
+
+    this.songData.currentSongNumber.subscribe(
+      (currentSongNumber) => this.homeForm.patchValue({selectedSongNumbers: currentSongNumber})
+    )
+
+    this.songData.currentArtistNumber.subscribe(
+      (currentArtistNumber) => this.homeForm.patchValue({selectedArtistNumbers: currentArtistNumber})
+    )
+
+    console.log(1)
+
+    //end of Will's code
+
     this.authLoading = true;
     const storedTokenString = localStorage.getItem(TOKEN_KEY);
     if (storedTokenString) {
@@ -61,4 +91,30 @@ export class HomeComponent implements OnInit {
     console.log(this.selectedGenre);
     console.log(TOKEN_KEY);
   }
+
+  onSubmit(){
+    this.songData.updateGenre(
+      this.homeForm.controls['genre'].value
+    );
+    this.songData.updateSongNumber(
+      this.homeForm.controls['selectedSongNumbers'].value
+    );
+    this.songData.updateArtistNumber(
+      this.homeForm.controls['selectedArtistNumbers'].value
+    )
+
+
+    console.log(this.songData.currentGenre)
+    console.log(this.songData.currentArtistNumber)
+    console.log(this.songData.currentSongNumber)
+
+
+
+
+    this.router.navigateByUrl('/guess')
+  }
+
+
+
+
 }
