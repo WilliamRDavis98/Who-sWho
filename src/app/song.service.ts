@@ -16,6 +16,9 @@ export class SongService{
     private artistNumber = new BehaviorSubject<number>(2)
     currentArtistNumber = this.artistNumber.asObservable();
 
+    private artistId = new BehaviorSubject<string>('')
+    currentArtistId = this.artistId.asObservable();
+
 
     updateGenre(genre: string){
         this.genreSource.next(genre);
@@ -27,5 +30,9 @@ export class SongService{
 
     updateArtistNumber(artists: number){
         this.artistNumber.next(artists);
+    }
+
+    updateArtistId(id:string){
+        this.artistId.next(id);
     }
 }

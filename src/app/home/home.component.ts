@@ -4,8 +4,8 @@ import { FormGroup, FormControl } from "@angular/forms";
 import { SongService } from "../song.service";
 import { Router } from "@angular/router";
 
-const AUTH_ENDPOINT ="https://accounts.spotify.com/api/token";
-  // "https://nuod0t2zoe.execute-api.us-east-2.amazonaws.com/FT-Classroom/spotify-auth-token";
+const AUTH_ENDPOINT = "https://accounts.spotify.com/api/token";
+// "https://nuod0t2zoe.execute-api.us-east-2.amazonaws.com/FT-Classroom/spotify-auth-token";
 const TOKEN_KEY = "whos-who-access-token";
 
 @Component({
@@ -14,13 +14,15 @@ const TOKEN_KEY = "whos-who-access-token";
   styleUrls: ["./home.component.css"],
 })
 export class HomeComponent implements OnInit {
-  constructor(private songData: SongService, private router: Router) {}
+  constructor(private songData: SongService, private router: Router) { }
 
   genres: String[] = ["House", "Alternative", "J-Rock", "R&B"];
-  selectedGenre: String = "";
+  selectedGenre: string = "";
   authLoading: boolean = false;
   configLoading: boolean = false;
-  token: String = "";
+  token: string = "";
+  artistId: string = "";
+
 
   homeForm: FormGroup = new FormGroup({
     genre: new FormControl<string>(''),
@@ -35,15 +37,15 @@ export class HomeComponent implements OnInit {
       (currentGenre) => this.selectedGenre)
 
     this.songData.currentGenre.subscribe(
-      (currentGenre) => this.homeForm.patchValue({genre: currentGenre})
+      (currentGenre) => this.homeForm.patchValue({ genre: currentGenre })
     )
 
     this.songData.currentSongNumber.subscribe(
-      (currentSongNumber) => this.homeForm.patchValue({selectedSongNumbers: currentSongNumber})
+      (currentSongNumber) => this.homeForm.patchValue({ selectedSongNumbers: currentSongNumber })
     )
 
     this.songData.currentArtistNumber.subscribe(
-      (currentArtistNumber) => this.homeForm.patchValue({selectedArtistNumbers: currentArtistNumber})
+      (currentArtistNumber) => this.homeForm.patchValue({ selectedArtistNumbers: currentArtistNumber })
     )
 
 
@@ -64,7 +66,7 @@ export class HomeComponent implements OnInit {
     console.log("Sending request to AWS endpoint");
     request(AUTH_ENDPOINT,
       {
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         method: 'POST',
         body: new URLSearchParams({
           'grant_type': 'client_credentials',
@@ -72,7 +74,7 @@ export class HomeComponent implements OnInit {
           'client_secret': '2364f60b3c6c483a8df359f46b5c2181'
         })
       }
-      ).then(({ access_token, expires_in }) => {
+    ).then(({ access_token, expires_in }) => {
       const newToken = {
         value: access_token,
         expiration: Date.now() + (expires_in - 20) * 1000,
@@ -83,6 +85,19 @@ export class HomeComponent implements OnInit {
       this.loadGenres(newToken.value);
     });
   }
+  loadRecommendations = async (t: any, genre: string) => {
+    this.configLoading = true;
+    const response = await fetchFromSpotify({
+      token: t,
+      endpoint: "recommendations?limit=1&market=US&seed_genres=" + genre,
+      params: ""    //limit=3&market=US&seed_genres=classical
+    });
+    this.configLoading = false;
+    this.artistId = response.tracks[0].artists[0].id
+    this.songData.updateArtistId(
+      this.artistId
+    )
+  };
 
   loadGenres = async (t: any) => {
     this.configLoading = true;
@@ -99,9 +114,27 @@ export class HomeComponent implements OnInit {
     this.selectedGenre = selectedGenre;
     console.log(this.selectedGenre);
     console.log(TOKEN_KEY);
+
+
   }
 
-  onSubmit(){
+  onGenerateArtists() {
+    this.authLoading = true;
+    const storedTokenString = localStorage.getItem(TOKEN_KEY);
+    if (storedTokenString) {
+      const storedToken = JSON.parse(storedTokenString);
+      if (storedToken.expiration > Date.now()) {
+        console.log("Token found in localstorage");
+        this.authLoading = false;
+        this.token = storedToken.value;
+        this.loadRecommendations(this.token, this.selectedGenre)
+        return;
+      }
+    }
+
+  }
+
+  onSubmit() {
     this.songData.updateGenre(
       this.homeForm.controls['genre'].value
     );
@@ -113,9 +146,11 @@ export class HomeComponent implements OnInit {
     )
 
 
-    console.log(this.songData.currentGenre)
-    console.log(this.songData.currentArtistNumber)
-    console.log(this.songData.currentSongNumber)
+
+
+    // console.log(this.songData.currentGenre)
+    // console.log(this.songData.currentArtistNumber)
+    // console.log(this.songData.currentSongNumber)
 
 
 
@@ -126,4 +161,14 @@ export class HomeComponent implements OnInit {
 
 
 
+
 }
+
+//response.tracks[0].artists[0].id
+
+//'https://api.spotify.com/v1/recommendations?limit=1&market=US&seed_genres=classical'
+
+
+
+
+
