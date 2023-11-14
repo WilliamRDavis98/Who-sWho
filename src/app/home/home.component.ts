@@ -64,7 +64,7 @@ export class HomeComponent implements OnInit {
     console.log("Sending request to AWS endpoint");
     request(AUTH_ENDPOINT,
       {
-        hearders: {'Content-Type': 'application/x-www-form-urlencoded'},
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         method: 'POST',
         body: new URLSearchParams({
           'grant_type': 'client_credentials',
