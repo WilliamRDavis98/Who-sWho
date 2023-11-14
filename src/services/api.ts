@@ -54,9 +54,12 @@ const fetchFromSpotify = ({ token, endpoint, params }: any) => {
       .map((param: any) => param.join("="))
       .join("&");
     url += `?${paramString}`;
+    console.log(paramString)
   }
   const options = { headers: { Authorization: `Bearer ${token}` } };
   return request(url, options);
 };
+
+
 
 export default fetchFromSpotify;
