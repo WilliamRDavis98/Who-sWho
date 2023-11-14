@@ -112,5 +112,23 @@ export class GuessComponent implements OnInit {
     currentSong.volume(currentSong.volume() - .1)
     console.log(currentSong.volume())
   }
+  
+  toggleSong(currentSong: Howl){
+    if(currentSong.playing()){
+      currentSong.pause()      
+    }else{
+      currentSong.play()
+    }
+  }
+
+  incrementVolume(currentSong: Howl){
+    currentSong.volume(currentSong.volume() + .1)
+    console.log(currentSong.volume())
+  }
+
+  decrementVolume(currentSong: Howl){
+    currentSong.volume(currentSong.volume() - .1)
+    console.log(currentSong.volume())
+  }
 
 }
