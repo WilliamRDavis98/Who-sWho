@@ -11,10 +11,16 @@ const getTrackUrl = 'https://api.spotify.com/v1/tracks/';
 export class spotifyService {
 
 
+// could potentially have one main "guess" method that incorporates all of these to generate the game
+
 // method: getRecommendations
 // needs to get the genres from user selection
+// converts the genres into the correct string to make the API call
 // needs to use the token in the call
 // maps to array of artistIds
+
+
+
 
 // method: chooseRandomArtist
 // loops through array of artistIds and then selects a random artist
@@ -22,6 +28,6 @@ export class spotifyService {
 
 // method: getArtistTopTracks
 
-//
+// method: getRelatedArtists
 
 }
