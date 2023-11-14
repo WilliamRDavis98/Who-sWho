@@ -14,11 +14,13 @@ export class GuessComponent implements OnInit {
   genre: string = ''
   songNumber: number = 1
   artistNumber: number = 2
+  artistId: string = ''
 
   ngOnInit(): void {
     this.songData.currentGenre.subscribe(currentGenre => this.genre = currentGenre)
     this.songData.currentSongNumber.subscribe(currentSongNumber => this.songNumber = currentSongNumber)
     this.songData.currentArtistNumber.subscribe(currentArtistNumber => this.artistNumber = currentArtistNumber)
+    this.songData.currentArtistId.subscribe(currentArtistId => this.artistId = currentArtistId)
   }
 
   onSubmit(){
