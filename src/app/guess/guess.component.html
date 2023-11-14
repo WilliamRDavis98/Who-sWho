@@ -1,6 +1,10 @@
 <div class="container">
     <div class="SongBoard">
-        <div class="Song"><h2>This is a song</h2></div>
+        <div class="Song">
+            <button class="Song" (click)="toggleSong(this.song1)">Toggle song 1</button>
+            <button class="volume" (click)="incrementVolume(this.song1)"> + </button>
+            <button class="volume" (click)="decrementVolume(this.song1)"> - </button>
+        </div>
         <div class="Song"><h2>This is a song</h2></div>
         <div class="Song"><h2>This is a song</h2></div>
     </div>
