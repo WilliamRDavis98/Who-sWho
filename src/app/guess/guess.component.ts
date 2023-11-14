@@ -21,6 +21,7 @@ export class GuessComponent implements OnInit {
   artistId: string = ''
   authLoading: boolean = false;
   configLoading: boolean = false;
+  enableAutoplay: boolean = false;
   token: string = "";
   songs: string[] = [];
   song1Url: string = "https://p.scdn.co/mp3-preview/6eafa4293d2b35b2e75ffab5ec1bba8ec00d5082?cid=0442ccff46ef47b981dd1b4e13eb8a4d";
