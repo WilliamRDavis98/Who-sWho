@@ -68,14 +68,17 @@ export class GuessComponent implements OnInit {
   }
 
   loadSongs = async (t: any, artistId: string, songNumber: number) => {
-    console.log("does this run")
-    const response =   await fetchFromSpotify({
+    const response = await fetchFromSpotify({
       token: t,
-      endpoint: "artists/" + artistId + "/top-tracks",
+      endpoint: "/artists/" + artistId + "/top-tracks?market=US",
     });
-    console.log("making call")
     console.log(response)
-    return;
+    let songsArray = [];
+    for (let i = 0; i < songNumber; i++) {
+      songsArray.push(response.tracks[0].id);
+    }
+    console.log(songsArray)
+    return songsArray;
 
   };
 

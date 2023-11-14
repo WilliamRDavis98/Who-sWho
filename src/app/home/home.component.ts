@@ -59,7 +59,7 @@ export class HomeComponent implements OnInit {
         console.log("Token found in localstorage");
         this.authLoading = false;
         this.token = storedToken.value;
-        // this.loadGenres(storedToken.value);
+        this.loadGenres(storedToken.value);
         return;
       }
     }
@@ -82,7 +82,7 @@ export class HomeComponent implements OnInit {
       localStorage.setItem(TOKEN_KEY, JSON.stringify(newToken));
       this.authLoading = false;
       this.token = newToken.value;
-      // this.loadGenres(newToken.value);
+      this.loadGenres(newToken.value);
     });
   }
   loadRecommendations = async (t: any, genre: string) => {
@@ -99,16 +99,16 @@ export class HomeComponent implements OnInit {
     )
   };
 
-  // loadGenres = async (t: any) => {
-  //   this.configLoading = true;
-  //   const response = await fetchFromSpotify({
-  //     token: t,
-  //     endpoint: "recommendations/available-genre-seeds",
-  //   });
-  //   console.log(response);
-  //   this.genres = response.genres;
-  //   this.configLoading = false;
-  // };
+  loadGenres = async (t: any) => {
+    this.configLoading = true;
+    const response = await fetchFromSpotify({
+      token: t,
+      endpoint: "recommendations/available-genre-seeds",
+    });
+    console.log(response);
+    this.genres = response.genres;
+    this.configLoading = false;
+  };
 
   setGenre(selectedGenre: any) {
     this.selectedGenre = selectedGenre;
@@ -117,20 +117,6 @@ export class HomeComponent implements OnInit {
 
 
   }
-
-  // onGenerateArtists() {
-  //   this.authLoading = true;
-  //   const storedTokenString = localStorage.getItem(TOKEN_KEY);
-  //   if (storedTokenString) {
-  //     const storedToken = JSON.parse(storedTokenString);
-  //     if (storedToken.expiration > Date.now()) {
-  //       console.log("Token found in localstorage");
-  //       this.authLoading = false;
-  //       this.token = storedToken.value;
-  //       this.loadRecommendations(this.token, this.selectedGenre)
-  //       return;
-  //     }
-  //   }
 
 
 
