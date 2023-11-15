@@ -27,6 +27,7 @@ export class GuessComponent implements OnInit {
   enableAutoplay: boolean = false;
   token: string = "";
   songs: string[] = [];
+  artists: string[] = [];
   // song1Url: string = "https://p.scdn.co/mp3-preview/6eafa4293d2b35b2e75ffab5ec1bba8ec00d5082?cid=0442ccff46ef47b981dd1b4e13eb8a4d";
   song1 = new Howl({
     src: ['https://p.scdn.co/mp3-preview/c590292029e985515f7063e8d5d291d677694eb9?cid=c4199e9be8874c78b1199eea6593dad4'],
@@ -49,6 +50,7 @@ export class GuessComponent implements OnInit {
       this.artistId = currentArtistId;
       this.getArtist(this.token, this.artistId);
       this.loadSongs(this.token, this.artistId, this.songNumber)
+      this.getRelatedArtists(this.token, this.artistId, this.artistNumber)
     });
 
     this.authLoading = true;
@@ -91,26 +93,36 @@ export class GuessComponent implements OnInit {
       endpoint: "artists/" + artistId + "/top-tracks?market=US",
     });
     console.log(response)
-    let songsArray = [];
     for (let i = 0; i < songNumber; i++) {
-      songsArray.push(response.tracks[i].id);
+      this.songs.push(response.tracks[i].id);
     }
-    console.log(songsArray)
+    console.log(this.songs)
     // return songsArray;
 
   };
 
+  getRelatedArtists = async (t:any, artistId: string, artistNumber: number) => {
+    const response = await fetchFromSpotify({
+      token: t,
+      endpoint: "artists/" + artistId + "/related-artists",
+    });
+
+    for (let i = 0; i < artistNumber - 1; i++) {
+      this.artists.push(response.artists[i].name)
+    }
+    console.log(this.artists);
+  }
+
 
   getArtist = async (t: any, artistId: string) => {
-    console.log(artistId)
     const response =  await fetchFromSpotify({
           token: t,
           endpoint: "artists/" + artistId,
         });
-    console.log(response);
+    this.artists.push(response.name);
     this.artistName1 = response.name;
+    console.log(this.artists)
   }
-
 
 
   returnHome(){
