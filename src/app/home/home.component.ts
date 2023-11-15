@@ -63,28 +63,31 @@ export class HomeComponent implements OnInit {
     //     return;
     //   }
     // }
-    // console.log("Sending request to AWS endpoint");
-    // request(AUTH_ENDPOINT,
-    //   {
-    //     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    //     method: 'POST',
-    //     body: new URLSearchParams({
-    //       'grant_type': 'client_credentials',
-    //       'client_id': '332232eda2814f0f8c5e213dfb3ef5b2',
-    //       'client_secret': '2364f60b3c6c483a8df359f46b5c2181'
-    //     })
-    //   }
-    // ).then(({ access_token, expires_in }) => {
-    //   const newToken = {
-    //     value: access_token,
-    //     expiration: Date.now() + (expires_in - 20) * 1000,
-    //   };
-    //   localStorage.setItem(TOKEN_KEY, JSON.stringify(newToken));
-    //   this.authLoading = false;
-    //   this.token = newToken.value;
-    //   this.loadGenres(newToken.value);
-    // });
+    console.log("Sending request to AWS endpoint");
+    request(AUTH_ENDPOINT,
+      {
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        method: 'POST',
+        body: new URLSearchParams({
+          'grant_type': 'client_credentials',
+          'client_id': '332232eda2814f0f8c5e213dfb3ef5b2',
+          'client_secret': '2364f60b3c6c483a8df359f46b5c2181'
+        })
+      }
+    ).then(({ access_token, expires_in }) => {
+      const newToken = {
+        value: access_token,
+        expiration: Date.now() + (expires_in - 20) * 1000,
+      };
+      localStorage.setItem(TOKEN_KEY, JSON.stringify(newToken));
+      this.authLoading = false;
+      this.token = newToken.value;
+      console.log(newToken.value)
+      this.loadGenres(newToken.value);
+    });
   }
+
+
   loadRecommendations = async (t: any, genre: string) => {
     this.configLoading = true;
     const response = await fetchFromSpotify({
