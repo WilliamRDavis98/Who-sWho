@@ -25,6 +25,7 @@ export class GuessComponent implements OnInit {
   authLoading: boolean = false;
   configLoading: boolean = false;
   enableAutoplay: boolean = false;
+  guessCount: number = 2;
   token: string = "";
   songs: string[] = [];
   artists: string[] = [];
@@ -45,6 +46,7 @@ export class GuessComponent implements OnInit {
     this.songData.currentGenre.subscribe(currentGenre => this.genre = currentGenre)
     this.songData.currentSongNumber.subscribe(currentSongNumber => this.songNumber = currentSongNumber)
     this.songData.currentArtistNumber.subscribe(currentArtistNumber => this.artistNumber = currentArtistNumber)
+    this.guessCount = this.artistNumber - 1
     this.songData.currentArtistId.subscribe(currentArtistId => {
       this.artistId = currentArtistId;
       this.getArtist(this.token, this.artistId);
@@ -122,12 +124,15 @@ export class GuessComponent implements OnInit {
 
 
   returnHome(){
+    this.songs = []
+    this.artists = []
+    // doing this to clear out the data to start a new game
     this.router.navigateByUrl('/')
   }
-  
+
   toggleSong(currentSong: Howl){
     if(currentSong.playing()){
-      currentSong.pause()      
+      currentSong.pause()
     }else{
       currentSong.play()
     }
@@ -142,8 +147,8 @@ export class GuessComponent implements OnInit {
     currentSong.volume(currentSong.volume() - .1)
     console.log(currentSong.volume())
   }
-  
-  
+
+
 
 
 

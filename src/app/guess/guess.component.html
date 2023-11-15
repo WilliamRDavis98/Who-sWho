@@ -16,11 +16,11 @@
     <div class="ArtistBoard">
         <div class="Artist"><button>{{ artists[0] }}</button></div>
         <div class="Artist"><button>{{ artists[1] }}</button></div>
-        <div class="Artist"><button>Select This Artist</button></div>
-        <div class="Artist"><button>Select This Artist</button></div>
+        <div class="Artist"><button>{{ artists[2] }}</button></div>
+        <div class="Artist"><button>{{ artists[3]}}</button></div>
     </div>
     <div class="Data">
-        <h3>You have: 3 Guesses Left!</h3>
+        <h3>You have: {{ guessCount }} Guesses Left!</h3>
         <h3>The Current Genre is {{ genre }}</h3>
         <h3>The number of Songs is {{ songNumber }}</h3>
         <h3>The number of Artists is {{ artistNumber }}</h3>
