@@ -75,7 +75,7 @@ export class GuessComponent implements OnInit {
     console.log(response)
     let songsArray = [];
     for (let i = 0; i < songNumber; i++) {
-      songsArray.push(response.tracks[0].id);
+      songsArray.push(response.tracks[i].id);
     }
     console.log(songsArray)
     return songsArray;
