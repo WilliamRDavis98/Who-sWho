@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { SongService } from '../song.service';
 import { Router } from '@angular/router';
 import fetchFromSpotify, { request } from "../../services/api";
@@ -19,25 +19,38 @@ export class GuessComponent implements OnInit {
   genre: string = ''
   songNumber: number = 1
   artistNumber: number = 2
-  artistId: string = ''
+  artistId: string = '';
+  artistId2: string = '0TnOYISbd1XYRBk9myaseg';
+  artistName1: string = '';
   authLoading: boolean = false;
   configLoading: boolean = false;
   enableAutoplay: boolean = false;
   token: string = "";
   songs: string[] = [];
-  // song1Url: string = "https://p.scdn.co/mp3-preview/6eafa4293d2b35b2e75ffab5ec1bba8ec00d5082?cid=0442ccff46ef47b981dd1b4e13eb8a4d";
+  artists: string[] = [];
+  song1Url: string = "https://p.scdn.co/mp3-preview/6eafa4293d2b35b2e75ffab5ec1bba8ec00d5082?cid=0442ccff46ef47b981dd1b4e13eb8a4d";
   song1 = new Howl({
-    src: ['https://p.scdn.co/mp3-preview/c590292029e985515f7063e8d5d291d677694eb9?cid=c4199e9be8874c78b1199eea6593dad4'],
+    src: ["https://p.scdn.co/mp3-preview/6eafa4293d2b35b2e75ffab5ec1bba8ec00d5082?cid=0442ccff46ef47b981dd1b4e13eb8a4d"],
     html5 :true,
     volume: .5
   });
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['artistId'] && changes['artistId'].currentValue) {
+      this.getArtist(this.token, changes['artistId'].currentValue);
+    }
+  }
 
   ngOnInit(): void {
     this.songData.currentGenre.subscribe(currentGenre => this.genre = currentGenre)
     this.songData.currentSongNumber.subscribe(currentSongNumber => this.songNumber = currentSongNumber)
     this.songData.currentArtistNumber.subscribe(currentArtistNumber => this.artistNumber = currentArtistNumber)
-    this.songData.currentArtistId.subscribe(currentArtistId => this.artistId = currentArtistId)
-
+    this.songData.currentArtistId.subscribe(currentArtistId => {
+      this.artistId = currentArtistId;
+      this.getArtist(this.token, this.artistId);
+      this.loadSongs(this.token, this.artistId, this.songNumber)
+      this.getRelatedArtists(this.token, this.artistId, this.artistNumber)
+    });
 
     this.authLoading = true;
     const storedTokenString = localStorage.getItem(TOKEN_KEY);
@@ -76,19 +89,36 @@ export class GuessComponent implements OnInit {
   loadSongs = async (t: any, artistId: string, songNumber: number) => {
     const response = await fetchFromSpotify({
       token: t,
-      endpoint: "/artists/" + artistId + "/top-tracks?market=US",
+      endpoint: "artists/" + artistId + "/top-tracks?market=US",
     });
     console.log(response)
-    let songsArray = [];
     for (let i = 0; i < songNumber; i++) {
-      songsArray.push(response.tracks[0].id);
+      this.songs.push(response.tracks[i].preview_url);
     }
-    console.log(songsArray)
-    return songsArray;
-
+    console.log(this.songs)
   };
 
+  getRelatedArtists = async (t:any, artistId: string, artistNumber: number) => {
+    const response = await fetchFromSpotify({
+      token: t,
+      endpoint: "artists/" + artistId + "/related-artists",
+    });
 
+    for (let i = 0; i < artistNumber - 1; i++) {
+      this.artists.push(response.artists[i].name)
+    }
+    console.log(this.artists);
+  }
+
+
+  getArtist = async (t: any, artistId: string) => {
+    const response =  await fetchFromSpotify({
+          token: t,
+          endpoint: "artists/" + artistId,
+        });
+    this.artists.push(response.name);
+    this.artistName1 = response.name;
+  }
 
 
   returnHome(){
@@ -114,5 +144,8 @@ export class GuessComponent implements OnInit {
   }
   
   
+
+
+
 
 }
