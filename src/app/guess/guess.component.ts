@@ -28,9 +28,9 @@ export class GuessComponent implements OnInit {
   token: string = "";
   songs: string[] = [];
   artists: string[] = [];
-  // song1Url: string = "https://p.scdn.co/mp3-preview/6eafa4293d2b35b2e75ffab5ec1bba8ec00d5082?cid=0442ccff46ef47b981dd1b4e13eb8a4d";
+  song1Url: string = "https://p.scdn.co/mp3-preview/6eafa4293d2b35b2e75ffab5ec1bba8ec00d5082?cid=0442ccff46ef47b981dd1b4e13eb8a4d";
   song1 = new Howl({
-    src: ['https://p.scdn.co/mp3-preview/c590292029e985515f7063e8d5d291d677694eb9?cid=c4199e9be8874c78b1199eea6593dad4'],
+    src: ["https://p.scdn.co/mp3-preview/6eafa4293d2b35b2e75ffab5ec1bba8ec00d5082?cid=0442ccff46ef47b981dd1b4e13eb8a4d"],
     html5 :true,
     volume: .5
   });
@@ -94,11 +94,9 @@ export class GuessComponent implements OnInit {
     });
     console.log(response)
     for (let i = 0; i < songNumber; i++) {
-      this.songs.push(response.tracks[i].id);
+      this.songs.push(response.tracks[i].preview_url);
     }
     console.log(this.songs)
-    // return songsArray;
-
   };
 
   getRelatedArtists = async (t:any, artistId: string, artistNumber: number) => {
@@ -121,7 +119,6 @@ export class GuessComponent implements OnInit {
         });
     this.artists.push(response.name);
     this.artistName1 = response.name;
-    console.log(this.artists)
   }
 
 
