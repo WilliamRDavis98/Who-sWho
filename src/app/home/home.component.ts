@@ -49,18 +49,20 @@ export class HomeComponent implements OnInit {
     )
 
 
-    this.authLoading = true;
-    const storedTokenString = localStorage.getItem(TOKEN_KEY);
-    if (storedTokenString) {
-      const storedToken = JSON.parse(storedTokenString);
-      if (storedToken.expiration > Date.now()) {
-        console.log("Token found in localstorage");
-        this.authLoading = false;
-        this.token = storedToken.value;
-        this.loadGenres(storedToken.value);
-        return;
-      }
-    }
+    //Un comment this
+
+    // this.authLoading = true;
+    // const storedTokenString = localStorage.getItem(TOKEN_KEY);
+    // if (storedTokenString) {
+    //   const storedToken = JSON.parse(storedTokenString);
+    //   if (storedToken.expiration > Date.now()) {
+    //     console.log("Token found in localstorage");
+    //     this.authLoading = false;
+    //     this.token = storedToken.value;
+    //     this.loadGenres(storedToken.value);
+    //     return;
+    //   }
+    // }
     console.log("Sending request to AWS endpoint");
     request(AUTH_ENDPOINT,
       {
@@ -80,10 +82,12 @@ export class HomeComponent implements OnInit {
       localStorage.setItem(TOKEN_KEY, JSON.stringify(newToken));
       this.authLoading = false;
       this.token = newToken.value;
+      console.log(newToken.value)
       this.loadGenres(newToken.value);
     });
   }
-  
+
+
   loadRecommendations = async (t: any, genre: string) => {
     this.configLoading = true;
     const response = await fetchFromSpotify({
