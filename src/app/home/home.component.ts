@@ -49,7 +49,6 @@ export class HomeComponent implements OnInit {
     )
 
 
-
     this.authLoading = true;
     const storedTokenString = localStorage.getItem(TOKEN_KEY);
     if (storedTokenString) {
@@ -84,6 +83,7 @@ export class HomeComponent implements OnInit {
       this.loadGenres(newToken.value);
     });
   }
+  
   loadRecommendations = async (t: any, genre: string) => {
     this.configLoading = true;
     const response = await fetchFromSpotify({

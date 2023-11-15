@@ -41,7 +41,6 @@ export class GuessComponent implements OnInit {
     }
   }
 
-
   ngOnInit(): void {
     this.songData.currentGenre.subscribe(currentGenre => this.genre = currentGenre)
     this.songData.currentSongNumber.subscribe(currentSongNumber => this.songNumber = currentSongNumber)
@@ -125,10 +124,10 @@ export class GuessComponent implements OnInit {
   returnHome(){
     this.router.navigateByUrl('/')
   }
-
+  
   toggleSong(currentSong: Howl){
     if(currentSong.playing()){
-      currentSong.pause()
+      currentSong.pause()      
     }else{
       currentSong.play()
     }
@@ -143,6 +142,9 @@ export class GuessComponent implements OnInit {
     currentSong.volume(currentSong.volume() - .1)
     console.log(currentSong.volume())
   }
+  
+  
+
 
 
 
