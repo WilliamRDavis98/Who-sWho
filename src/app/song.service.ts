@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { Artist } from 'src/models/ArtistsIdByGenre';
 
 @Injectable({
     providedIn: 'root',
@@ -21,8 +22,6 @@ export class SongService{
 
     private globalToken = new BehaviorSubject<string>('')
     currentGlobalToken = this.globalToken.asObservable();
-    
-
 
     updateGenre(genre: string){
         this.genreSource.next(genre);

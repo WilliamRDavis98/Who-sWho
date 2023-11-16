@@ -1,12 +1,21 @@
-<div class="container">
+<div *ngIf="configLoading">Loading...</div>
+<div *ngIf="!configLoading" class="container">
     <div class="SongBoard">
         <div class="Song">
             <button class="Song" (click)="toggleSong(this.song1)">Toggle song 1</button>
             <button class="volume" (click)="incrementVolume(this.song1)"> + </button>
             <button class="volume" (click)="decrementVolume(this.song1)"> - </button>
         </div>
-        <button class="Song" (click)="toggleSong(this.song2)">Toggle song 2</button>
-        <button class="Song" (click)="toggleSong(this.song3)">Toggle song 3</button>
+        <div class="Song" *ngIf="this.songNumber >= 2">
+            <button class="Song" (click)="toggleSong(this.song2)">Toggle song 2</button>
+            <button class="volume" (click)="incrementVolume(this.song2)"> + </button>
+            <button class="volume" (click)="decrementVolume(this.song2)"> - </button>
+        </div>
+        <div class="Song" *ngIf="this.songNumber == 3">
+            <button class="Song" (click)="toggleSong(this.song3)">Toggle song 3</button>
+            <button class="volume" (click)="incrementVolume(this.song3)"> + </button>
+            <button class="volume" (click)="decrementVolume(this.song3)"> - </button>
+        </div>
     </div>
     <!-- <div>
       <video controls="" name="media" [autoplay]="enableAutoplay">
@@ -15,20 +24,20 @@
     </div> -->
     <div class="ArtistBoard">
         <div class="Artist">
-            <img src={{this.artistsPic[0]}} alt="artist1">
-            <button>{{ artists[0] }}</button>
+            <img src={{this.artistz[0].picture}} alt="artist1">
+            <button (click)="checkAnswer(this.artistz[0])">{{ this.artistz[0].name }}</button>
         </div>
         <div class="Artist">
-            <img src={{this.artistsPic[1]}} alt="artist1">
-            <button>{{ artists[1] }}</button>
+            <img src={{this.artistz[1].picture}} alt="artist1">
+            <button (click)="checkAnswer(this.artistz[1])">{{ this.artistz[1].name }}</button>
         </div>
-        <div class="Artist">
-            <img src={{this.artistsPic[2]}} alt="artist1">
-            <button>{{ artists[2] }}</button>
+        <div class="Artist" *ngIf="this.artistNumber >= 3">
+            <img src={{this.artistz[2].picture}} alt="artist1">
+            <button (click)="checkAnswer(this.artistz[2])">{{ this.artistz[2].name }}</button>
         </div>
-        <div class="Artist">
-            <img src={{this.artistsPic[3]}} alt="artist1">
-            <button>{{ artists[3]}}</button>
+        <div class="Artist" *ngIf="this.artistNumber == 4">
+            <img src={{this.artistz[3].picture}} alt="artist1">
+            <button (click)="checkAnswer(this.artistz[3])">{{ this.artistz[3].name}}</button>
         </div>
     </div>
     <div class="Data">
@@ -38,7 +47,7 @@
         <h3>The number of Artists is {{ artistNumber }}</h3>
         <button (click)="returnHome()">Return to Home Screen!</button>
         <h2>the Artist ID is {{ artistId }}</h2>
-        
+
         <button (click)="randomizeArtists(this.token,this.artistId)">randomizeArtists</button>
 
     </div>

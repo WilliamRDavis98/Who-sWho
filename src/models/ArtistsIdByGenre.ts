@@ -1,4 +1,4 @@
-export { Rock, Country, Pop, HipHop, Classical, Electronic, Jazz, album}
+export { Rock, Country, Pop, HipHop, Classical, Electronic, Jazz, album, Artist}
 
 
 
@@ -20,4 +20,10 @@ const album: {Rock: string[], Country:string[], Pop:string[], HipHop:string[], C
     Electronic: Electronic,
     Jazz: Jazz
 
+}
+
+interface Artist{
+    name: string,
+    picture: string,
+    isCorrect: boolean,
 }
