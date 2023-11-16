@@ -184,7 +184,6 @@ export class GuessComponent implements OnInit {
     //console.log(this.artists);
   }
 
-
   randomizeArtists = async (t: any, artistId: string) => {
     const response = await fetchFromSpotify({
       token: t,
@@ -226,19 +225,6 @@ export class GuessComponent implements OnInit {
     this.setUpBoard()
     this.setUpGame()
   }
-
-  // checkAnswer(optionNumber: number) {
-  //   const selectedArtist = this.artists[optionNumber]
-  //   const correctArtist = this.artists[0]
-  //   if (selectedArtist == correctArtist) {
-  //     this.isCorrectGuess = true;
-  //     console.log("correct")
-  //   }
-  //   else {
-  //     this.guessCount -= 1;
-  //     console.log("wrong")
-  //   }
-  // }
 
   returnHome() {
     this.songs = []
