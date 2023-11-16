@@ -19,6 +19,10 @@ export class SongService{
     private artistId = new BehaviorSubject<string>('')
     currentArtistId = this.artistId.asObservable();
 
+    private globalToken = new BehaviorSubject<string>('')
+    currentGlobalToken = this.globalToken.asObservable();
+    
+
 
     updateGenre(genre: string){
         this.genreSource.next(genre);
@@ -34,5 +38,9 @@ export class SongService{
 
     updateArtistId(id:string){
         this.artistId.next(id);
+    }
+
+    updateGlobalToken(tokenInsert:string){
+        this.globalToken.next(tokenInsert)
     }
 }
