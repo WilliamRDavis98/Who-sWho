@@ -102,7 +102,7 @@ export class GuessComponent implements OnInit {
 
   loadSongs = async (t: any, artistId: string, songNumber: number) => {
     const response = await fetchFromSpotify({
-      token: 'BQD58-ZX7VLkC2VLwwIUaGlRqietu33zi3PG6B8pW3WwzUEXpKZaUpZepApE3DSv2GOxuD7l8ts3Lq6kHVxzldn6_fLBo4GAJckLjvPoZ71Y-Ozl8v0',
+      token: t,
       endpoint: "artists/" + artistId + "/top-tracks?market=US",
     });
     console.log('checking songs for artist ' + artistId)
@@ -141,6 +141,7 @@ export class GuessComponent implements OnInit {
       this.resetGame()
       return 'sorry'
     }
+
 
 
 

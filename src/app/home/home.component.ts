@@ -23,8 +23,8 @@ export class HomeComponent implements OnInit {
   configLoading: boolean = false;
   token: string = "";
   artistId: string = "";
-  
-  
+
+
 
 
   homeForm: FormGroup = new FormGroup({
@@ -36,7 +36,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
 
-    
+
     //Will's Code
     this.songData.currentGenre.subscribe(
       (currentGenre) => this.selectedGenre)
@@ -90,7 +90,7 @@ export class HomeComponent implements OnInit {
       console.log("A new token was generated")
       //this.loadGenres(newToken.value);
     });
-  
+
 }
 
 
@@ -159,7 +159,7 @@ export class HomeComponent implements OnInit {
     //   }
 
     let key = this.selectedGenre as keyof typeof album;
-    
+
     this.artistId = this.randomElement(album[key])
     this.songData.updateArtistId(
       this.artistId

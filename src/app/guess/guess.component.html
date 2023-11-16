@@ -1,72 +1,48 @@
 <div class="container">
-    <div class="SongBoard">
-        <!-- <div class="Song">
-            <button class="Song" (click)="toggleSong(this.song1)">Toggle song 1</button>
-            <button class="volume" (click)="incrementVolume(this.song1)"> + </button>
-            <button class="volume" (click)="decrementVolume(this.song1)"> - </button>
-<<<<<<< HEAD
-        </div> -->
-        <div class="Song"><h2>This is a song</h2></div>
-        <div class="Song"><h2>This is a song</h2></div>
-=======
-        </div>
-        <button class="Song" (click)="toggleSong(this.song2)">Toggle song 2</button>
-        <button class="Song" (click)="toggleSong(this.song3)">Toggle song 3</button>
-<<<<<<< HEAD
->>>>>>> 33d5f4031046eeeff4a369407be61848e53910cb
-    </div>
-    <div>
-      <audio controls="" name="media" >
-        <!-- [autoplay]="enableAutoplay" -->
-        <!-- autostart="false" -->
-        <source [src]="song1Src" type="audio/mp3">
-      </audio>
-=======
->>>>>>> 33d5f4031046eeeff4a369407be61848e53910cb
-    </div>
-    <div class="ArtistBoard">
-<<<<<<< HEAD
-<<<<<<< HEAD
-        <div class="Artist1"><button (click)="checkAnswer(0)">{{ artists[0] }}</button></div>
-        <div class="Artist2"><button (click)="checkAnswer(1)">{{ artists[1] }}</button></div>
-        <div class="Artist3"><button (click)="checkAnswer(2)">{{ artists[2] }}</button></div>
-        <div class="Artist4"><button (click)="checkAnswer(3)">{{ artists[3]}}</button></div>
-    </div>
-    <div *ngIf="isCorrectGuess">
-      <h2>Congratulations! You guessed correctly!</h2>
-=======
-=======
->>>>>>> 33d5f4031046eeeff4a369407be61848e53910cb
-        <div class="Artist">
-            <img src={{this.artistsPic[0]}} alt="artist1">
-            <button>{{ artists[0] }}</button>
-        </div>
-        <div class="Artist">
-            <img src={{this.artistsPic[1]}} alt="artist1">
-            <button>{{ artists[1] }}</button>
-        </div>
-        <div class="Artist">
-            <img src={{this.artistsPic[2]}} alt="artist1">
-            <button>{{ artists[2] }}</button>
-        </div>
-        <div class="Artist">
-            <img src={{this.artistsPic[3]}} alt="artist1">
-            <button>{{ artists[3]}}</button>
-        </div>
-<<<<<<< HEAD
->>>>>>> 33d5f4031046eeeff4a369407be61848e53910cb
-=======
->>>>>>> 33d5f4031046eeeff4a369407be61848e53910cb
-    </div>
-    <div class="Data">
-        <h3>You have: {{ guessCount }} Guesses Left!</h3>
-        <h3>The Current Genre is {{ genre }}</h3>
-        <h3>The number of Songs is {{ songNumber }}</h3>
-        <h3>The number of Artists is {{ artistNumber }}</h3>
-        <button (click)="returnHome()">Return to Home Screen!</button>
-        <h2>the Artist ID is {{ artistId }}</h2>
-        
-        <button (click)="randomizeArtists(this.token,this.artistId)">randomizeArtists</button>
+  <h1 class="text-3xl font-bold underline">
+    Hello world!
+  </h1>
+  <div class="SongBoard">
+      <div class="Song">
+          <button class="Song" (click)="toggleSong(this.song1)">Toggle song 1</button>
+          <button class="volume" (click)="incrementVolume(this.song1)"> + </button>
+          <button class="volume" (click)="decrementVolume(this.song1)"> - </button>
+      </div>
+      <button class="Song" (click)="toggleSong(this.song2)">Toggle song 2</button>
+      <button class="Song" (click)="toggleSong(this.song3)">Toggle song 3</button>
+  </div>
+  <!-- <div>
+    <video controls="" name="media" [autoplay]="enableAutoplay">
+      <source src=songs[0] type="audio/mp3" autostart="false">
+    </video>
+  </div> -->
+  <div class="ArtistBoard">
+      <div class="Artist">
+          <img src={{this.artistsPic[0]}} alt="artist1">
+          <button>{{ artists[0] }}</button>
+      </div>
+      <div class="Artist">
+          <img src={{this.artistsPic[1]}} alt="artist1">
+          <button>{{ artists[1] }}</button>
+      </div>
+      <div class="Artist">
+          <img src={{this.artistsPic[2]}} alt="artist1">
+          <button>{{ artists[2] }}</button>
+      </div>
+      <div class="Artist">
+          <img src={{this.artistsPic[3]}} alt="artist1">
+          <button>{{ artists[3]}}</button>
+      </div>
+  </div>
+  <div class="Data">
+      <h3>You have: {{ guessCount }} Guesses Left!</h3>
+      <h3>The Current Genre is {{ genre }}</h3>
+      <h3>The number of Songs is {{ songNumber }}</h3>
+      <h3>The number of Artists is {{ artistNumber }}</h3>
+      <button (click)="returnHome()">Return to Home Screen!</button>
+      <h2>the Artist ID is {{ artistId }}</h2>
 
-    </div>
+      <button (click)="randomizeArtists(this.token,this.artistId)">randomizeArtists</button>
+
+  </div>
 </div>
