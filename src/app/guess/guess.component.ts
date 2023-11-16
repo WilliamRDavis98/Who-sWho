@@ -88,7 +88,7 @@ export class GuessComponent implements OnInit {
 
 
   }
-  
+
 
 
   setUpBoard() {
@@ -141,6 +141,7 @@ export class GuessComponent implements OnInit {
       this.resetGame()
       return 'sorry'
     }
+
 
 
 
@@ -225,7 +226,6 @@ export class GuessComponent implements OnInit {
     this.setUpBoard()
     this.setUpGame()
   }
-
 
   returnHome() {
     this.songs = []

@@ -21,7 +21,7 @@ export class SongService{
 
     private globalToken = new BehaviorSubject<string>('')
     currentGlobalToken = this.globalToken.asObservable();
-    
+
 
 
     updateGenre(genre: string){
