@@ -3,6 +3,7 @@ import fetchFromSpotify, { request } from "../../services/api";
 import { FormGroup, FormControl } from "@angular/forms";
 import { SongService } from "../song.service";
 import { Router } from "@angular/router";
+import {Rock, Country, Pop, HipHop, Classical, Electronic, Jazz,album} from "../../models/ArtistsIdByGenre"
 
 const AUTH_ENDPOINT = "https://accounts.spotify.com/api/token";
 // "https://nuod0t2zoe.execute-api.us-east-2.amazonaws.com/FT-Classroom/spotify-auth-token";
@@ -16,12 +17,14 @@ const TOKEN_KEY = "whos-who-access-token";
 export class HomeComponent implements OnInit {
   constructor(private songData: SongService, private router: Router) { }
 
-  genres: String[] = ["house", "Alternative", "J-Rock", "R&B"];
+  genres: String[] = ["Rock", "Country", "Pop", "HipHop", "Classical", "Electronic","Jazz"]
   selectedGenre: string = "";
   authLoading: boolean = false;
   configLoading: boolean = false;
   token: string = "";
   artistId: string = "";
+  
+  
 
 
   homeForm: FormGroup = new FormGroup({
@@ -32,6 +35,8 @@ export class HomeComponent implements OnInit {
 
 
   ngOnInit(): void {
+
+    
     //Will's Code
     this.songData.currentGenre.subscribe(
       (currentGenre) => this.selectedGenre)
@@ -49,7 +54,9 @@ export class HomeComponent implements OnInit {
     )
 
 
-    this.authLoading = true;
+    //Un comment this
+
+    //this.authLoading = true;
     const storedTokenString = localStorage.getItem(TOKEN_KEY);
     if (storedTokenString) {
       const storedToken = JSON.parse(storedTokenString);
@@ -57,7 +64,7 @@ export class HomeComponent implements OnInit {
         console.log("Token found in localstorage");
         this.authLoading = false;
         this.token = storedToken.value;
-        this.loadGenres(storedToken.value);
+        // this.loadGenres(storedToken.value);
         return;
       }
     }
@@ -80,10 +87,13 @@ export class HomeComponent implements OnInit {
       localStorage.setItem(TOKEN_KEY, JSON.stringify(newToken));
       this.authLoading = false;
       this.token = newToken.value;
-      this.loadGenres(newToken.value);
+      console.log("A new token was generated")
+      //this.loadGenres(newToken.value);
     });
-  }
   
+}
+
+
   loadRecommendations = async (t: any, genre: string) => {
     this.configLoading = true;
     const response = await fetchFromSpotify({
@@ -112,9 +122,11 @@ export class HomeComponent implements OnInit {
   setGenre(selectedGenre: any) {
     this.selectedGenre = selectedGenre;
     console.log(this.selectedGenre);
-    console.log(TOKEN_KEY);
+  }
 
-
+  randomElement(array:string[]){
+    console.log("The First id is: " + array[(Math.floor(Math.random() * array.length))])
+    return array[(Math.floor(Math.random() * array.length))];
   }
 
 
@@ -129,19 +141,32 @@ export class HomeComponent implements OnInit {
     this.songData.updateArtistNumber(
       this.homeForm.controls['selectedArtistNumbers'].value
     )
+    this.songData.updateGlobalToken(
+      this.token
+    )
 
-    this.authLoading = true;
-    const storedTokenString = localStorage.getItem(TOKEN_KEY);
-    if (storedTokenString) {
-      const storedToken = JSON.parse(storedTokenString);
-      if (storedToken.expiration > Date.now()) {
-        console.log("Token found in localstorage");
-        this.authLoading = false;
-        this.token = storedToken.value;
-        this.loadRecommendations(this.token, this.selectedGenre)
-        this.router.navigateByUrl('/guess')
-        return;
-      }
+    // this.authLoading = true;
+    // const storedTokenString = localStorage.getItem(TOKEN_KEY);
+    // if (storedTokenString) {
+    //   const storedToken = JSON.parse(storedTokenString);
+    //   if (storedToken.expiration > Date.now()) {
+    //     console.log("Token found in localstorage");
+    //     this.authLoading = false;
+    //     this.token = storedToken.value;
+    //     this.loadRecommendations(this.token, this.selectedGenre)
+    //     this.router.navigateByUrl('/guess')
+    //     return;
+    //   }
+
+    let key = this.selectedGenre as keyof typeof album;
+    
+    this.artistId = this.randomElement(album[key])
+    this.songData.updateArtistId(
+      this.artistId
+    )
+    console.log('the token is ' + this.token)
+
+    this.router.navigateByUrl('/guess')
     }
 
 
@@ -158,7 +183,7 @@ export class HomeComponent implements OnInit {
 
 
 
-}
+
 
 //response.tracks[0].artists[0].id
 

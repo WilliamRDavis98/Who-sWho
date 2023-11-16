@@ -5,8 +5,8 @@
             <button class="volume" (click)="incrementVolume(this.song1)"> + </button>
             <button class="volume" (click)="decrementVolume(this.song1)"> - </button>
         </div>
-        <div class="Song"><h2>This is a song</h2></div>
-        <div class="Song"><h2>This is a song</h2></div>
+        <button class="Song" (click)="toggleSong(this.song2)">Toggle song 2</button>
+        <button class="Song" (click)="toggleSong(this.song3)">Toggle song 3</button>
     </div>
     <!-- <div>
       <video controls="" name="media" [autoplay]="enableAutoplay">
@@ -14,10 +14,22 @@
       </video>
     </div> -->
     <div class="ArtistBoard">
-        <div class="Artist"><button>{{ artists[0] }}</button></div>
-        <div class="Artist"><button>{{ artists[1] }}</button></div>
-        <div class="Artist"><button>{{ artists[2] }}</button></div>
-        <div class="Artist"><button>{{ artists[3]}}</button></div>
+        <div class="Artist">
+            <img src={{this.artistsPic[0]}} alt="artist1">
+            <button>{{ artists[0] }}</button>
+        </div>
+        <div class="Artist">
+            <img src={{this.artistsPic[1]}} alt="artist1">
+            <button>{{ artists[1] }}</button>
+        </div>
+        <div class="Artist">
+            <img src={{this.artistsPic[2]}} alt="artist1">
+            <button>{{ artists[2] }}</button>
+        </div>
+        <div class="Artist">
+            <img src={{this.artistsPic[3]}} alt="artist1">
+            <button>{{ artists[3]}}</button>
+        </div>
     </div>
     <div class="Data">
         <h3>You have: {{ guessCount }} Guesses Left!</h3>
@@ -26,6 +38,8 @@
         <h3>The number of Artists is {{ artistNumber }}</h3>
         <button (click)="returnHome()">Return to Home Screen!</button>
         <h2>the Artist ID is {{ artistId }}</h2>
+        
+        <button (click)="randomizeArtists(this.token,this.artistId)">randomizeArtists</button>
 
     </div>
 </div>
