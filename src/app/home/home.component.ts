@@ -5,6 +5,11 @@ import { SongService } from "../song.service";
 import { Router } from "@angular/router";
 import {Rock, Country, Pop, HipHop, Classical, Electronic, Jazz,album} from "../../models/ArtistsIdByGenre"
 
+interface Artist {
+
+}
+
+
 const AUTH_ENDPOINT = "https://accounts.spotify.com/api/token";
 // "https://nuod0t2zoe.execute-api.us-east-2.amazonaws.com/FT-Classroom/spotify-auth-token";
 const TOKEN_KEY = "whos-who-access-token";

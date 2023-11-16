@@ -2,10 +2,12 @@ import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { SongService } from '../song.service';
 import { Router } from '@angular/router';
 import fetchFromSpotify, { request } from "../../services/api";
+import { Artist } from 'src/models/ArtistsIdByGenre';
 
 const AUTH_ENDPOINT = "https://accounts.spotify.com/api/token";
 const TOKEN_KEY = "whos-who-access-token";
 import { Howl, Howler } from 'howler';
+import { reject } from 'lodash';
 
 @Component({
   selector: 'app-guess',
@@ -14,24 +16,21 @@ import { Howl, Howler } from 'howler';
 })
 export class GuessComponent implements OnInit {
 
-
   constructor(private songData: SongService, private router: Router) { }
+  artistz: Artist[] = []
 
   genre: string = ''
   songNumber: number = 1
   artistNumber: number = 2
   artistId: string = '';
-  artistId2: string = '0TnOYISbd1XYRBk9myaseg';
-  artistName1: string = '';
   authLoading: boolean = false;
   configLoading: boolean = false;
   enableAutoplay: boolean = false;
   guessCount: number = 2;
   token: string = "";
   songs: string[] = [];
-  artists: string[] = []
-  artistsPic: string[] = [];
-  //song1Url: string = "https://p.scdn.co/mp3-preview/6ce4a46d375c652e30658e8f51fcdc1e997bbf1f?cid=c4199e9be8874c78b1199eea6593dad4";
+
+
   song1 = new Howl({
     src: ["https://p.scdn.co/mp3-preview/6ce4a46d375c652e30658e8f51fcdc1e997bbf1f?cid=c4199e9be8874c78b1199eea6593dad4"],
     html5: true,
@@ -81,13 +80,21 @@ export class GuessComponent implements OnInit {
     //   this.token = newToken.value;
     // });
 
-    this.setUpBoard()
-    this.setUpGame()
-
-
-
-
+    this.resetGame()
   }
+
+  checkAnswer(Artist:Artist){
+    if(Artist.isCorrect){
+      alert('You are right!')
+      this.resetGame()
+    }else{
+      this.guessCount--
+      if(this.guessCount == 0){
+        alert('You are out of guesses!')
+        this.returnHome()
+      }
+    }
+  }  
 
 
 
@@ -126,25 +133,19 @@ export class GuessComponent implements OnInit {
           console.log('already there is [' + alreadyThere + ']')
           i--
         }
-
       } else if (alreadyThere.length != 10) {
         --i
       }
-
     }
     //console.log(response.tracks)
     console.log('Here are the song preview urls')
     console.log(this.songs)
 
-    if(this.songs.length != this.songNumber){
+    if (this.songs.length != this.songNumber) {
       console.log('Not enough songs')
       this.resetGame()
       return 'sorry'
     }
-
-
-
-
     if (this.songNumber >= 1) {
       this.song1 = new Howl({
         src: [this.songs[0]],
@@ -165,10 +166,7 @@ export class GuessComponent implements OnInit {
         html5: true,
         volume: .5
       });
-
     }
-
-
     return this.artistId
   };
 
@@ -177,12 +175,25 @@ export class GuessComponent implements OnInit {
       token: t,
       endpoint: "artists/" + artistId + "/related-artists",
     });
+    let alreadyThere: number[] = []
 
-    for (let i = 0; i < artistNumber; i++) {
-      this.artists.push(response.artists[i].name)
-      this.artistsPic.push(response.artists[i].images[response.artists[i].images.length - 1].url)
+
+
+    for (let i = 1; i < artistNumber; i++) {
+      let random: number = Math.floor(Math.random() * response.artists.length)
+      if (!alreadyThere.includes(random)) {
+        alreadyThere.push(random)
+        this.artistz.push({ name: response.artists[random].name, picture: response.artists[random].images[response.artists[random].images.length - 1].url, isCorrect: false })
+      } else {
+        i--
+      }
+      this.shuffleAnswers(this.artistz)
     }
-    //console.log(this.artists);
+    console.log(this.artistz[0])
+    for (let artist of this.artistz) {
+      console.log('the artist is ' + artist.name + ' ' + artist.picture + ' ' + artist.isCorrect)
+    }
+    this.configLoading = false
   }
 
   randomizeArtists = async (t: any, artistId: string) => {
@@ -205,10 +216,9 @@ export class GuessComponent implements OnInit {
       token: t,
       endpoint: "artists/" + artistId,
     });
-    this.artists.push(response.name);
-    this.artistName1 = response.name;
-    this.artistsPic.push(response.images[response.images.length - 1].url)
-    console.log('the artist pics are ' + this.artistsPic)
+    let artist1: Artist = { name: response.name, picture: response.images[response.images.length - 1].url, isCorrect: true }
+    this.artistz = []
+    this.artistz.push({ name: response.name, picture: response.images[response.images.length - 1].url, isCorrect: true })
     //console.log(this.artistName1)
     return artistId
   }
@@ -218,28 +228,51 @@ export class GuessComponent implements OnInit {
       .then((artistId) => this.getArtist(this.token, artistId))
       .then(artistId => this.loadSongs(this.token, artistId, this.songNumber))
       .then(artistId => this.getRelatedArtists(this.token, artistId, this.artistNumber))
-
-
+    
+    
+    
   }
 
-  resetGame(){
+  resetGame() {
+    this.configLoading = true
     this.setUpBoard()
     this.setUpGame()
+    
   }
 
   returnHome() {
+    Howler.stop();
     this.songs = []
-    this.artists = []
+    this.artistz = []
     // doing this to clear out the data to start a new game
     this.router.navigateByUrl('/')
+  }
+ 
+  shuffleAnswers(array: Artist[]) {
+    var m = array.length, t, i;
+    // While there remain elements to shuffle…
+    while (m) {
+      // Pick a remaining element…
+      i = Math.floor(Math.random() * m--);
+      // And swap it with the current element.
+      t = array[m];
+      array[m] = array[i];
+      array[i] = t;
+    }
+    return array;
   }
 
   toggleSong(currentSong: Howl) {
     if (currentSong.playing()) {
       currentSong.pause()
     } else {
+      Howler.stop()
       currentSong.play()
     }
+  }
+
+  pauseCurrent(){
+    
   }
 
   incrementVolume(currentSong: Howl) {
