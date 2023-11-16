@@ -21,24 +21,26 @@ export class GuessComponent implements OnInit {
   artistNumber: number = 2
   artistId: string = '';
   artistId2: string = '0TnOYISbd1XYRBk9myaseg';
-  artistName1: string = '';
+  correctArtist: string = '';
   authLoading: boolean = false;
   configLoading: boolean = false;
   enableAutoplay: boolean = false;
   guessCount: number = 2;
+  isCorrectGuess: boolean = false;
   token: string = "";
   songs: string[] = [];
   artists: string[] = [];
   song1Url: string = "https://p.scdn.co/mp3-preview/6eafa4293d2b35b2e75ffab5ec1bba8ec00d5082?cid=0442ccff46ef47b981dd1b4e13eb8a4d";
-  song1 = new Howl({
-    src: ["https://p.scdn.co/mp3-preview/6eafa4293d2b35b2e75ffab5ec1bba8ec00d5082?cid=0442ccff46ef47b981dd1b4e13eb8a4d"],
-    html5 :true,
-    volume: .5
-  });
+  // song1 = new Howl({
+  //   src:
+  //   html5: true,
+  //   volume: .5
+  // });
+  song1Src: string = ""
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['artistId'] && changes['artistId'].currentValue) {
-      this.getArtist(this.token, changes['artistId'].currentValue);
+    if (changes['artistId2'] && changes['artistId2'].currentValue) {
+      this.getArtist(this.token, changes['artistId2'].currentValue);
     }
   }
 
@@ -49,9 +51,9 @@ export class GuessComponent implements OnInit {
     this.guessCount = this.artistNumber - 1
     this.songData.currentArtistId.subscribe(currentArtistId => {
       this.artistId = currentArtistId;
-      this.getArtist(this.token, this.artistId);
-      this.loadSongs(this.token, this.artistId, this.songNumber)
-      this.getRelatedArtists(this.token, this.artistId, this.artistNumber)
+      this.getArtist(this.token, this.artistId2);
+      this.loadSongs(this.token, this.artistId2, this.songNumber)
+      this.getRelatedArtists(this.token, this.artistId2, this.artistNumber)
     });
 
     this.authLoading = true;
@@ -90,24 +92,26 @@ export class GuessComponent implements OnInit {
 
   loadSongs = async (t: any, artistId: string, songNumber: number) => {
     const response = await fetchFromSpotify({
-      token: t,
+      token: 'BQD58-ZX7VLkC2VLwwIUaGlRqietu33zi3PG6B8pW3WwzUEXpKZaUpZepApE3DSv2GOxuD7l8ts3Lq6kHVxzldn6_fLBo4GAJckLjvPoZ71Y-Ozl8v0',
       endpoint: "artists/" + artistId + "/top-tracks?market=US",
     });
     console.log(response)
     for (let i = 0; i < songNumber; i++) {
       this.songs.push(response.tracks[i].preview_url);
     }
+    this.song1Src = this.songs[0];
     console.log(this.songs)
   };
 
-  getRelatedArtists = async (t:any, artistId: string, artistNumber: number) => {
+  getRelatedArtists = async (t: any, artistId2: string, artistNumber: number) => {
     const response = await fetchFromSpotify({
-      token: t,
-      endpoint: "artists/" + artistId + "/related-artists",
+      token: 'BQD58-ZX7VLkC2VLwwIUaGlRqietu33zi3PG6B8pW3WwzUEXpKZaUpZepApE3DSv2GOxuD7l8ts3Lq6kHVxzldn6_fLBo4GAJckLjvPoZ71Y-Ozl8v0',
+      endpoint: "artists/" + artistId2 + "/related-artists",
     });
 
-    for (let i = 0; i < artistNumber - 1; i++) {
+    for (let i = 0; i < artistNumber; i++) {
       this.artists.push(response.artists[i].name)
+      // change the artistnumber to artistnumber - 1 for some reason it wasn't working with the API
     }
     console.log(this.artists);
   }
@@ -118,10 +122,23 @@ export class GuessComponent implements OnInit {
           token: t,
           endpoint: "artists/" + artistId,
         });
+    this.correctArtist = response.name
     this.artists.push(response.name);
-    this.artistName1 = response.name;
+
   }
 
+  checkAnswer(optionNumber: number) {
+    const selectedArtist = this.artists[optionNumber]
+    const correctArtist = this.artists[0]
+    if (selectedArtist == correctArtist) {
+      this.isCorrectGuess = true;
+      console.log("correct")
+    }
+    else {
+      this.guessCount -= 1;
+      console.log("wrong")
+    }
+  }
 
   returnHome(){
     this.songs = []

@@ -1,23 +1,28 @@
 <div class="container">
     <div class="SongBoard">
-        <div class="Song">
+        <!-- <div class="Song">
             <button class="Song" (click)="toggleSong(this.song1)">Toggle song 1</button>
             <button class="volume" (click)="incrementVolume(this.song1)"> + </button>
             <button class="volume" (click)="decrementVolume(this.song1)"> - </button>
-        </div>
+        </div> -->
         <div class="Song"><h2>This is a song</h2></div>
         <div class="Song"><h2>This is a song</h2></div>
     </div>
-    <!-- <div>
-      <video controls="" name="media" [autoplay]="enableAutoplay">
-        <source src=songs[0] type="audio/mp3" autostart="false">
-      </video>
-    </div> -->
+    <div>
+      <audio controls="" name="media" >
+        <!-- [autoplay]="enableAutoplay" -->
+        <!-- autostart="false" -->
+        <source [src]="song1Src" type="audio/mp3">
+      </audio>
+    </div>
     <div class="ArtistBoard">
-        <div class="Artist"><button>{{ artists[0] }}</button></div>
-        <div class="Artist"><button>{{ artists[1] }}</button></div>
-        <div class="Artist"><button>{{ artists[2] }}</button></div>
-        <div class="Artist"><button>{{ artists[3]}}</button></div>
+        <div class="Artist1"><button (click)="checkAnswer(0)">{{ artists[0] }}</button></div>
+        <div class="Artist2"><button (click)="checkAnswer(1)">{{ artists[1] }}</button></div>
+        <div class="Artist3"><button (click)="checkAnswer(2)">{{ artists[2] }}</button></div>
+        <div class="Artist4"><button (click)="checkAnswer(3)">{{ artists[3]}}</button></div>
+    </div>
+    <div *ngIf="isCorrectGuess">
+      <h2>Congratulations! You guessed correctly!</h2>
     </div>
     <div class="Data">
         <h3>You have: {{ guessCount }} Guesses Left!</h3>
