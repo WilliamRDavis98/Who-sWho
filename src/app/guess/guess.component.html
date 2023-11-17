@@ -24,20 +24,20 @@
     </div> -->
     <div class="ArtistBoard">
         <div class="Artist">
-            <img src={{this.artistz[0].picture}} alt="artist1">
-            <button (click)="checkAnswer(this.artistz[0])">{{ this.artistz[0].name }}</button>
+            
+            <button (click)="checkAnswer(this.artistz[0])"><img src={{this.artistz[0].picture}} alt="artist1">{{ this.artistz[0].name }}</button>
         </div>
         <div class="Artist">
-            <img src={{this.artistz[1].picture}} alt="artist1">
-            <button (click)="checkAnswer(this.artistz[1])">{{ this.artistz[1].name }}</button>
+            
+            <button (click)="checkAnswer(this.artistz[1])"><img src={{this.artistz[1].picture}} alt="artist1">{{ this.artistz[1].name }}</button>
         </div>
         <div class="Artist" *ngIf="this.artistNumber >= 3">
-            <img src={{this.artistz[2].picture}} alt="artist1">
-            <button (click)="checkAnswer(this.artistz[2])">{{ this.artistz[2].name }}</button>
+            
+            <button (click)="checkAnswer(this.artistz[2])"><img src={{this.artistz[2].picture}} alt="artist1">{{ this.artistz[2].name }}</button>
         </div>
         <div class="Artist" *ngIf="this.artistNumber == 4">
-            <img src={{this.artistz[3].picture}} alt="artist1">
-            <button (click)="checkAnswer(this.artistz[3])">{{ this.artistz[3].name}}</button>
+            
+            <button (click)="checkAnswer(this.artistz[3])"><img src={{this.artistz[3].picture}} alt="artist1">{{ this.artistz[3].name}}</button>
         </div>
     </div>
     <div class="Data">
