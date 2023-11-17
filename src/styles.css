@@ -9,6 +9,7 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
+    width: 100vw;
     
   }
 
@@ -21,6 +22,8 @@
 .disabled {
   background: red;
   color: black;
-  cursor: default;  
+  cursor: default;
+  opacity: 25%;
+  
 }
 
