@@ -80,7 +80,13 @@ export class GuessComponent implements OnInit {
     //   this.token = newToken.value;
     // });
 
-    this.resetGame()
+    Howler.stop()
+    this.configLoading = true
+    this.setUpBoard()
+    if(this.genre == null || this.genre == undefined || this.genre == ''){
+      this.router.navigateByUrl('/')
+    }
+    this.setUpGame()
   }
 
   checkAnswer(Artist:Artist){
@@ -234,6 +240,7 @@ export class GuessComponent implements OnInit {
   }
 
   resetGame() {
+    Howler.stop()
     this.configLoading = true
     this.setUpBoard()
     this.setUpGame()
@@ -269,10 +276,6 @@ export class GuessComponent implements OnInit {
       Howler.stop()
       currentSong.play()
     }
-  }
-
-  pauseCurrent(){
-    
   }
 
   incrementVolume(currentSong: Howl) {

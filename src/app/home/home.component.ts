@@ -43,6 +43,9 @@ export class HomeComponent implements OnInit {
 
 
     //Will's Code
+    let songstorage:number = Number(localStorage.getItem("storageSongNumber"))
+    console.log(Number(localStorage.getItem("storageArtistNumber")))
+    
     this.songData.currentGenre.subscribe(
       (currentGenre) => this.selectedGenre)
 
@@ -57,7 +60,15 @@ export class HomeComponent implements OnInit {
     this.songData.currentArtistNumber.subscribe(
       (currentArtistNumber) => this.homeForm.patchValue({ selectedArtistNumbers: currentArtistNumber })
     )
-
+if(localStorage.getItem("storageSongNumber") != null && localStorage.getItem("storageArtistNumber") != null){
+  this.songData.updateSongNumber(
+    songstorage
+  );
+  this.songData.updateArtistNumber(
+    Number(localStorage.getItem("storageArtistNumber"))
+  )
+  
+}
 
     //Un comment this
 
@@ -150,6 +161,9 @@ export class HomeComponent implements OnInit {
       this.token
     )
 
+    localStorage.setItem("storageSongNumber",this.homeForm.controls['selectedSongNumbers'].value.toString())
+    localStorage.setItem("storageArtistNumber",this.homeForm.controls['selectedArtistNumbers'].value.toString())
+
     // this.authLoading = true;
     // const storedTokenString = localStorage.getItem(TOKEN_KEY);
     // if (storedTokenString) {
@@ -178,6 +192,8 @@ export class HomeComponent implements OnInit {
     // console.log(this.songData.currentGenre)
     // console.log(this.songData.currentArtistNumber)
     // console.log(this.songData.currentSongNumber)
+
+    
 
 
 
