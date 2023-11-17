@@ -7,8 +7,8 @@
         <p class="mt-6 text-lg leading-8 text-gray-600">Who's who is an interactive guessing game where you put your musical knowledge to the test.</p>
       </div>
       <form [formGroup]="homeForm">
-      <div>
-        <label for="genre" class="block text-sm font-medium leading-6 text-gray-900">Step 1: Select a genre</label>
+      <div class=" pt-5">
+        <label for="genre" class="block text-lg font-medium leading-6 text-gray-900">Step 1: Select a genre</label>
         <select id="genre" name="genre" [(ngModel)]="selectedGenre" (ngModelChange)="setGenre($event)" formControlName="genre" class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6">
           <option [ngValue]="undefined" disabled>Select a Genre</option>
           <option [ngValue]="genre" *ngFor="let genre of genres">
@@ -21,16 +21,16 @@
 
         </ng-container>
       </div>
-      <div>
-        <label for="songNumber" class="block text-sm font-medium leading-6 text-gray-900">Step 2: Select how many songs you want from the artist</label>
+      <div class=" pt-5">
+        <label for="songNumber" class="block text-lg font-medium leading-6 text-gray-900">Step 2: Select how many songs you want from the artist</label>
         <select id="songNumber" name="songNumber" class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" formControlName="selectedSongNumbers">
           <option selected>1</option>
           <option>2</option>
           <option>3</option>
         </select>
       </div>
-      <div>
-        <label for="artistNumber" class="block text-sm font-medium leading-6 text-gray-900">Step 3: Choose how many artists you want to choose from</label>
+      <div class=" pt-5">
+        <label for="artistNumber" class="block text-lg font-medium leading-6 text-gray-900">Step 3: Choose how many artists you want to choose from</label>
         <select id="artistNumber" class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" formControlName="selectedArtistNumbers">
           <option selected>2</option>
           <option>3</option>
@@ -38,9 +38,9 @@
         </select>
       </div>
     </form>
-      <div>
+      <div class=" pt-10 flex items-center justify-center p">
         <button [disabled]="homeForm.invalid" [ngClass]="homeForm.invalid ? 'disabled' : ''"
-        class="link rounded bg-emerald-900 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-emerald-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600" (click)="onSubmit()">Guess</button>
+        class="text-2xl guess-button link rounded bg-emerald-900 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-emerald-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600" (click)="onSubmit()">Guess</button>
       </div>
     </div>
     <!-- <form class="form-box mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" [formGroup]="homeForm">
@@ -67,11 +67,4 @@
         </select>
       </div>
     </form> -->
-    <div class="bg-emerald-200">
-    <p>Selected Genre: {{homeForm.controls['genre'].value}}</p>
-    <p>Selected Song Numbers: {{homeForm.controls['selectedSongNumbers'].value}}</p>
-    <p>Selected Artist Numbers: {{homeForm.controls['selectedArtistNumbers'].value}}</p>
-    <p>Selected Artist Id: {{ artistId }}</p>
-
-  </div>
 </div>

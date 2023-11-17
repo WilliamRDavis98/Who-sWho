@@ -29,6 +29,9 @@ export class GuessComponent implements OnInit {
   guessCount: number = 2;
   token: string = "";
   songs: string[] = [];
+  alertWrong: boolean = false;
+  alertRight: boolean = false;
+  alertNoGuesses: boolean = false;
 
 
   song1 = new Howl({
@@ -90,14 +93,15 @@ export class GuessComponent implements OnInit {
   }
 
   checkAnswer(Artist:Artist){
+    this.alertWrong = false
     if(Artist.isCorrect){
-      alert('You are right!')
-      this.resetGame()
+      this.alertWrong = false
+      this.alertRight = true
     }else{
+      this.alertWrong = true
       this.guessCount--
       if(this.guessCount == 0){
-        alert('You are out of guesses!')
-        this.returnHome()
+        this.alertNoGuesses = true
       }
     }
   }  
@@ -242,6 +246,9 @@ export class GuessComponent implements OnInit {
   resetGame() {
     Howler.stop()
     this.configLoading = true
+    this.alertNoGuesses = false
+    this.alertRight = false
+    this.alertWrong = false
     this.setUpBoard()
     this.setUpGame()
     
