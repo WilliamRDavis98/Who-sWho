@@ -8,6 +8,19 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 90vh;
-    width: 100vw;
+    height: 100vh;
+    
   }
+
+.error{
+  color: palevioletred;
+  font-size: 1.5em;
+  width: 100% !important;
+}
+
+.disabled {
+  background: red;
+  color: black;
+  cursor: default;  
+}
+
