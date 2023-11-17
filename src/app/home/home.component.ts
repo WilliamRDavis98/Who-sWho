@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import fetchFromSpotify, { request } from "../../services/api";
-import { FormGroup, FormControl } from "@angular/forms";
+import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { SongService } from "../song.service";
 import { Router } from "@angular/router";
 import {Rock, Country, Pop, HipHop, Classical, Electronic, Jazz,album} from "../../models/ArtistsIdByGenre"
@@ -33,7 +33,7 @@ export class HomeComponent implements OnInit {
 
 
   homeForm: FormGroup = new FormGroup({
-    genre: new FormControl<string>(''),
+    genre: new FormControl<string | undefined>(undefined,[Validators.required]),
     selectedSongNumbers: new FormControl<number>(1),
     selectedArtistNumbers: new FormControl<number>(2)
   })
