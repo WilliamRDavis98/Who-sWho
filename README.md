@@ -38,12 +38,9 @@ This assessment is large and you should use your time wisely. UI design and styl
 
 ![LoadingScreen](https://github.com/WilliamRDavis98/Who-sWho/assets/122470883/ad2e91d5-26a6-4c5c-aa6a-5f2bb0403729)
 
-![Guess Screen](https://github.com/WilliamRDavis98/Who-sWho/assets/122470883/5de908f2-361a-4a60-a3b9-1e7f7c0273e3)
-
+![Guess Screen](https://github.com/WilliamRDavis98/Who-sWho/assets/122470883/276a414c-b89e-4502-836a-2e88b6970019)
 
 ![Correct Screen](https://github.com/WilliamRDavis98/Who-sWho/assets/122470883/6d0c65bd-7679-4a2b-94f9-3d9835b91987)
 
-
-![Response Homepage](https://github.com/WilliamRDavis98/Who-sWho/assets/122470883/89542657-9654-452d-9396-864d708ce2fe)
-
-![Response Guess Screen](https://github.com/WilliamRDavis98/Who-sWho/assets/122470883/480f63b6-5c04-4364-805d-3c27bd22f649)
+![Response Homepage](https://github.com/WilliamRDavis98/Who-sWho/assets/122470883/f65c9ba0-0eb0-4b7e-841e-1dedcd474773)
+![Response Guess Screen](https://github.com/WilliamRDavis98/Who-sWho/assets/122470883/f5d51c4d-1e85-4cef-92ce-1c33302bf0fd)
