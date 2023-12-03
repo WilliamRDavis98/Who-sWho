@@ -31,3 +31,19 @@ The code in the `services/api.ts` file should not need modification. If you feel
 URL encoding converts characters into a format that can be transmitted over the Internet. The url encoding for a 'space' character is '%20'.
 
 This assessment is large and you should use your time wisely. UI design and styling should be your LAST priority. Get the majority of the functionality in the application built along with a basic minimal wireframe of your components. Once you've done that and it _works_, begin thinking about a minimal and clean UI. A business/product owner/stakeholder would much rather have something that doesn't look pretty, but works, than have something that looks great but doesn't do anything.
+
+# Final Screenshots
+
+![HomePage](https://github.com/WilliamRDavis98/Who-sWho/assets/122470883/36513ae3-6422-443b-a9b2-8534a914741e)
+
+![LoadingScreen](https://github.com/WilliamRDavis98/Who-sWho/assets/122470883/ad2e91d5-26a6-4c5c-aa6a-5f2bb0403729)
+
+![Guess Screen](https://github.com/WilliamRDavis98/Who-sWho/assets/122470883/5de908f2-361a-4a60-a3b9-1e7f7c0273e3)
+
+
+![Correct Screen](https://github.com/WilliamRDavis98/Who-sWho/assets/122470883/6d0c65bd-7679-4a2b-94f9-3d9835b91987)
+
+
+![Response Homepage](https://github.com/WilliamRDavis98/Who-sWho/assets/122470883/89542657-9654-452d-9396-864d708ce2fe)
+
+![Response Guess Screen](https://github.com/WilliamRDavis98/Who-sWho/assets/122470883/480f63b6-5c04-4364-805d-3c27bd22f649)
